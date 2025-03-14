@@ -124,4 +124,62 @@ RSpec.describe GildedRose do
       expect(item).to have_attributes(sell_in: -1, quality: 0)
     end
   end
+
+  describe('Conjured (name: Conjured Mana Cake, sell_in: 20, quality: 15') do
+    let(:item) { Item.new('Conjured Mana Cake', 20, 15) }
+
+    it 'After 1 day it should have sell_in 19, quality 13' do
+      update_quality_for_days(gilded_rose, 1)
+      expect(item).to have_attributes(sell_in: 19, quality: 13)
+    end
+
+    it 'After 3 days it should have sell_in 17, quality 9' do
+      update_quality_for_days(gilded_rose, 3)
+      expect(item).to have_attributes(sell_in: 17, quality: 9)
+    end
+
+    it 'After 7 days it should have sell_in 13, quality 1' do
+      update_quality_for_days(gilded_rose, 7)
+      expect(item).to have_attributes(sell_in: 13, quality: 1)
+    end
+
+    it 'After 8 days it should have sell_in 12, quality 0' do
+      update_quality_for_days(gilded_rose, 8)
+      expect(item).to have_attributes(sell_in: 12, quality: 0)
+    end
+
+    it 'After 20 days it should have sell_in 0, quality 0' do
+      update_quality_for_days(gilded_rose, 20)
+      expect(item).to have_attributes(sell_in: 0, quality: 0)
+    end
+  end
+
+  describe('Conjured (name: Conjured Mana Cake, sell_in: 5, quality: 30') do
+    let(:item) { Item.new('Conjured Mana Cake', 5, 30) }
+
+    it 'After 2 days it should have sell_in 3, quality 26' do
+      update_quality_for_days(gilded_rose, 2)
+      expect(item).to have_attributes(sell_in: 3, quality: 26)
+    end
+
+    it 'After 4 days it should have sell_in 1, quality 22' do
+      update_quality_for_days(gilded_rose, 4)
+      expect(item).to have_attributes(sell_in: 1, quality: 22)
+    end
+
+    it 'After 5 days it should have sell_in 0, quality 18' do
+      update_quality_for_days(gilded_rose, 5)
+      expect(item).to have_attributes(sell_in: 0, quality: 20)
+    end
+
+    it 'After 6 days it should have sell_in -1, quality 16' do
+      update_quality_for_days(gilded_rose, 6)
+      expect(item).to have_attributes(sell_in: -1, quality: 16)
+    end
+
+    it 'After 20 days it should have sell_in -15, quality 0' do
+      update_quality_for_days(gilded_rose, 20)
+      expect(item).to have_attributes(sell_in: -15, quality: 0)
+    end
+  end
 end

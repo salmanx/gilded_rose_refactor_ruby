@@ -105,4 +105,54 @@ class GildedRoseTest < Minitest::Test
     assert_equal(-1, item.sell_in)
     assert_equal 0, item.quality
   end
+
+  def test_conjured_item
+    item = Item.new('Conjured Mana Cake', 20, 15)
+    gilded_rose = GildedRose.new([item])
+
+    update_quality_for_days(gilded_rose, 1)
+    assert_equal 19, item.sell_in
+    assert_equal 13, item.quality
+
+    update_quality_for_days(gilded_rose, 2)
+    assert_equal 17, item.sell_in
+    assert_equal 9, item.quality
+
+    update_quality_for_days(gilded_rose, 4)
+    assert_equal 13, item.sell_in
+    assert_equal 1, item.quality
+
+    update_quality_for_days(gilded_rose, 1)
+    assert_equal 12, item.sell_in
+    assert_equal 0, item.quality
+
+    update_quality_for_days(gilded_rose, 12)
+    assert_equal 0, item.sell_in
+    assert_equal 0, item.quality
+  end
+
+  def test_conjured_item_with_different_initial_values
+    item = Item.new('Conjured Mana Cake', 5, 30)
+    gilded_rose = GildedRose.new([item])
+
+    update_quality_for_days(gilded_rose, 2)
+    assert_equal 3, item.sell_in
+    assert_equal 26, item.quality
+
+    update_quality_for_days(gilded_rose, 2)
+    assert_equal 1, item.sell_in
+    assert_equal 22, item.quality
+
+    update_quality_for_days(gilded_rose, 1)
+    assert_equal 0, item.sell_in
+    assert_equal 20, item.quality
+
+    update_quality_for_days(gilded_rose, 1)
+    assert_equal(-1, item.sell_in)
+    assert_equal 16, item.quality
+
+    update_quality_for_days(gilded_rose, 14)
+    assert_equal(-15, item.sell_in)
+    assert_equal 0, item.quality
+  end
 end

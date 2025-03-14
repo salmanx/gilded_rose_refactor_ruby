@@ -29,9 +29,14 @@ class GildedRose
     item.name == 'Backstage passes to a TAFKAL80ETC concert'
   end
 
+  def conjured_item?(item)
+    item.name === 'Conjured Mana Cake'
+  end
+
   def quality_change(item)
     return aged_brie_change(item) if aged_brie?(item)
     return backstage_pass_change(item) if backstage_pass?(item)
+    return conjured_item_change(item) if conjured_item?(item)
 
     normal_item_change(item)
   end
@@ -47,6 +52,10 @@ class GildedRose
 
   def aged_brie_change(item)
     item.sell_in <= 0 ? 2 : 1
+  end
+
+  def conjured_item_change(item)
+    item.sell_in <= 0 ? -4 : -2
   end
 
   def normal_item_change(item)
