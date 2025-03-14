@@ -7,7 +7,7 @@ class GildedRoseTest < Minitest::Test
   end
 
   def test_regular_item
-    item = Item.new("+5 Dexterity Vest", 10, 20)
+    item = Item.new('+5 Dexterity Vest', 10, 20)
     gilded_rose = GildedRose.new([item])
 
     update_quality_for_days(gilded_rose, 1)
@@ -32,7 +32,7 @@ class GildedRoseTest < Minitest::Test
   end
 
   def test_aged_brie
-    item = Item.new("Aged Brie", 2, 0)
+    item = Item.new('Aged Brie', 2, 0)
     gilded_rose = GildedRose.new([item])
 
     update_quality_for_days(gilded_rose, 1)
@@ -61,7 +61,7 @@ class GildedRoseTest < Minitest::Test
   end
 
   def test_sulfuras
-    item = Item.new("Sulfuras, Hand of Ragnaros", 2, 0)
+    item = Item.new('Sulfuras, Hand of Ragnaros', 2, 0)
     gilded_rose = GildedRose.new([item])
 
     update_quality_for_days(gilded_rose, 1)
@@ -74,7 +74,7 @@ class GildedRoseTest < Minitest::Test
   end
 
   def test_backstage_passes
-    item = Item.new("Backstage passes to a TAFKAL80ETC concert", 20, 15)
+    item = Item.new('Backstage passes to a TAFKAL80ETC concert', 20, 15)
     gilded_rose = GildedRose.new([item])
 
     update_quality_for_days(gilded_rose, 1)

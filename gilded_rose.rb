@@ -1,55 +1,56 @@
 class GildedRose
-
   def initialize(items)
     @items = items
   end
 
-  def update_quality()
-    @items.each do |item|
-      if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
-            item.quality = item.quality - 1
-          end
-        end
-      else
-        if item.quality < 50
-          item.quality = item.quality + 1
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-          end
-        end
-      end
-      if item.name != "Sulfuras, Hand of Ragnaros"
-        item.sell_in = item.sell_in - 1
-      end
-      if item.sell_in < 0
-        if item.name != "Aged Brie"
-          if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > 0
-              if item.name != "Sulfuras, Hand of Ragnaros"
-                item.quality = item.quality - 1
-              end
-            end
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < 50
-            item.quality = item.quality + 1
-          end
-        end
-      end
-    end
+  def update_quality
+    @items.each { |item| update_item(item) }
+  end
+
+  private
+
+  def update_item(item)
+    return if legendary_item?(item)
+
+    quality = quality_change(item)
+    item.sell_in -= 1
+    item.quality = (item.quality + quality).clamp(0..50)
+  end
+
+  def legendary_item?(item)
+    item.name === 'Sulfuras, Hand of Ragnaros'
+  end
+
+  def aged_brie?(item)
+    item.name == 'Aged Brie'
+  end
+
+  def backstage_pass?(item)
+    item.name == 'Backstage passes to a TAFKAL80ETC concert'
+  end
+
+  def quality_change(item)
+    return aged_brie_change(item) if aged_brie?(item)
+    return backstage_pass_change(item) if backstage_pass?(item)
+
+    normal_item_change(item)
+  end
+
+  def backstage_pass_change(item)
+    return -item.quality if item.sell_in <= 0
+    # order is important here
+    return 3 if item.sell_in <= 5
+    return 2 if item.sell_in <= 10
+
+    1
+  end
+
+  def aged_brie_change(item)
+    item.sell_in <= 0 ? 2 : 1
+  end
+
+  def normal_item_change(item)
+    item.sell_in <= 0 ? -2 : -1
   end
 end
 
@@ -62,7 +63,7 @@ class Item
     @quality = quality
   end
 
-  def to_s()
+  def to_s
     "#{@name}, #{@sell_in}, #{@quality}"
   end
 end

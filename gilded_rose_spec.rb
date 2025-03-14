@@ -9,8 +9,8 @@ RSpec.describe GildedRose do
 
   let(:gilded_rose) { GildedRose.new([item]) }
 
-  describe ('Regular item (name: +5 Dexterity Vest, sell_in: 10, quality: 20') do
-    let(:item) { Item.new("+5 Dexterity Vest", 10, 20) }
+  describe('Regular item (name: +5 Dexterity Vest, sell_in: 10, quality: 20') do
+    let(:item) { Item.new('+5 Dexterity Vest', 10, 20) }
 
     it 'After 1 day it should have sell_in 9, quality 19' do
       update_quality_for_days(gilded_rose, 1)
@@ -38,8 +38,8 @@ RSpec.describe GildedRose do
     end
   end
 
-  describe ('Aged brie (name: Aged Brie, sell_in: 2, quality: 0') do
-    let(:item) { Item.new("Aged Brie", 2, 0) }
+  describe('Aged brie (name: Aged Brie, sell_in: 2, quality: 0') do
+    let(:item) { Item.new('Aged Brie', 2, 0) }
 
     it 'After 1 day it should have sell_in 1, quality 1' do
       update_quality_for_days(gilded_rose, 1)
@@ -50,7 +50,6 @@ RSpec.describe GildedRose do
       update_quality_for_days(gilded_rose, 2)
       expect(item).to have_attributes(sell_in: 0, quality: 2)
     end
-
 
     it 'After 5 days it should have sell_in -3, quality 8' do
       update_quality_for_days(gilded_rose, 5)
@@ -71,11 +70,10 @@ RSpec.describe GildedRose do
       update_quality_for_days(gilded_rose, 53)
       expect(item).to have_attributes(sell_in: -51, quality: 50)
     end
-
   end
 
-  describe ('Sulfuras (name: Sulfuras, Hand of Ragnaros, sell_in: 2, quality: 0') do
-    let(:item) { Item.new("Sulfuras, Hand of Ragnaros", 2, 0) }
+  describe('Sulfuras (name: Sulfuras, Hand of Ragnaros, sell_in: 2, quality: 0') do
+    let(:item) { Item.new('Sulfuras, Hand of Ragnaros', 2, 0) }
 
     it 'After 1 day it should have sell_in 2, quality 0' do
       update_quality_for_days(gilded_rose, 1)
@@ -86,12 +84,10 @@ RSpec.describe GildedRose do
       update_quality_for_days(gilded_rose, 2)
       expect(item).to have_attributes(sell_in: 2, quality: 0)
     end
-
   end
 
-
-  describe ('Backstage passes (name: Backstage passes to a TAFKAL80ETC concert, sell_in: 20, quality: 15') do
-    let(:item) { Item.new("Backstage passes to a TAFKAL80ETC concert", 20, 15) }
+  describe('Backstage passes (name: Backstage passes to a TAFKAL80ETC concert, sell_in: 20, quality: 15') do
+    let(:item) { Item.new('Backstage passes to a TAFKAL80ETC concert', 20, 15) }
 
     it 'After 1 day it should have sell_in 19, quality 16' do
       update_quality_for_days(gilded_rose, 1)
@@ -123,16 +119,9 @@ RSpec.describe GildedRose do
       expect(item).to have_attributes(sell_in: 0, quality: 50)
     end
 
-
     it 'After 21 days it should have sell_in -1, quality 0' do
       update_quality_for_days(gilded_rose, 21)
       expect(item).to have_attributes(sell_in: -1, quality: 0)
     end
-
-
   end
-
-
-
 end
-
